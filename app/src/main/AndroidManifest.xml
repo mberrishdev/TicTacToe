@@ -15,13 +15,7 @@
             android:name=".OfflineGameActivity"
             android:exported="false" />
         <activity
-            android:name=".OflineGameActivity"
-            android:exported="false" />
-        <activity
             android:name=".HomePageActivity"
-            android:exported="false" />
-        <activity
-            android:name=".HomePageActiviry"
             android:exported="false" />
         <activity
             android:name=".AuthActivity"
