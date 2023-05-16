@@ -12,10 +12,13 @@ interface UserDao {
     fun getUserByName(name: String): List<User>
 
     @Query("SELECT id FROM users WHERE user_name = :name")
-    suspend fun getUserIdByName(name: String): Long?
+    fun getUserIdByName(name: String): Long?
+
+    @Query("SELECT user_name FROM users WHERE id = :id")
+    fun getUserNameById(id: Long): String?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertUser(user: User)
+    fun insertUser(user: User)
 
     @Delete
     suspend fun deleteUser(user: User)
@@ -28,4 +31,7 @@ interface UserDao {
 
     @Query("SELECT user_name FROM users WHERE is_external = 0")
     suspend fun getInternalUserName(): String
+
+    @Query("SELECT id FROM users WHERE is_external = 0")
+    suspend fun getInternalUserId(): Long
 }

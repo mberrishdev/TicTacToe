@@ -15,6 +15,9 @@ import com.example.tictactoe.Database.Users.UserRepository
 import kotlinx.coroutines.launch
 
 class OfflineGameActivity : AppCompatActivity(), BoardFragment.ButtonClickListener {
+
+    private lateinit var gameHistoryListFragment: GameHistoryListFragment
+
     lateinit var userRepository: UserRepository
         private set
 
@@ -22,8 +25,8 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.ButtonClickListen
         private set
 
     private var player1Name: String = "";
+    private var player1Id: Long = 0;
     private var player2Name: String = "";
-    private var gameHistoryId: Long = 0;
     private var player1Score: Int = 0;
     private var player2Score: Int = 0;
 
@@ -41,7 +44,12 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.ButtonClickListen
             player1Name =  userRepository.getInternalUserName()
         }
 
-        showPlayer2NamePopup();
+        lifecycleScope.launch() {
+            player1Id =  userRepository.getInternalUserId()
+        }
+
+        openGameHistoryListFragment();
+        //showPlayer2NamePopup();
     }
 
     override fun onButtonClick(row: Int, col: Int,) {
@@ -79,7 +87,7 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.ButtonClickListen
             if (player2Exists) {
                 loadBoard(name);
             } else {
-                savePayer2Name(name)
+               // savePayer2Name(name)
             }
 
             player2Name = name;
@@ -88,28 +96,7 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.ButtonClickListen
 
     private fun loadBoard(name: String):Boolean
     {
-        //todo
-        if(true)
-        {
-            //get board between this 2 player
-            //player1Score =
-            //player2Score =
-        }
-        {
-            createGameHistory()
-        }
         return  true;
-    }
-
-    private fun savePayer2Name(name: String)
-    {
-        val newUser = User(
-            userName = name,
-            isExternal = true
-        )
-        lifecycleScope.launch() {
-            userRepository.insertUser(newUser);
-        }
     }
 
     private fun createAndStartGame()
@@ -123,25 +110,25 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.ButtonClickListen
         boardFragment.setButtonClickListener(this)
     }
 
-    private fun createGameHistory(){
-        lifecycleScope.launch() {
-            val player1Id = userRepository.getUserIdByName(player1Name);
-            val player2Id = userRepository.getUserIdByName(player2Name);
+    private fun openGameHistoryListFragment(){
+        gameHistoryListFragment = GameHistoryListFragment()
+        val bundle = Bundle()
+        bundle.putString("Player1Name", player1Name)
+        bundle.putLong("Player1Id", player1Id)
+        gameHistoryListFragment.arguments = bundle
 
-            if(player1Id !=null && player2Id !=null) {
-                val gameHistory = GameHistory(
-                    user1Id = player1Id ?: 0,
-                    user2Id = player2Id ?: 0,
-                    user1Score = 0,
-                    user2Score = 0,
-                )
+        supportFragmentManager.beginTransaction()//.add(R.id.fragmentContainer, gameHistoryListFragment)
+            .replace(R.id.fragmentContainer, gameHistoryListFragment)
+            .commit()
+    }
 
-                // lifecycleScope.launch() {
-                gameHistoryId = gameHistoryRepository.insertGameHistory(gameHistory);
-                // }
-            }
+    fun handleItemClick(itemId: Long) {
+        // Handle the item click event in the activity, for example:
+        Toast.makeText(this, "Selected item ID: $itemId", Toast.LENGTH_SHORT).show()
 
-
-        }
+        supportFragmentManager.beginTransaction()
+            .remove(gameHistoryListFragment)
+            .commit()
+        supportFragmentManager.popBackStack()
     }
 }

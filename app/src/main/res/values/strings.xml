@@ -6,4 +6,6 @@
     <string name="player_turn">Player %s</string>
     <string name="player_wins">%s wins!</string>
     <string name="reset_game">Reset game</string>
+    <string name="enter_name">Enter name</string>
+    <string name="save_and_play">Save and play</string>
 </resources>

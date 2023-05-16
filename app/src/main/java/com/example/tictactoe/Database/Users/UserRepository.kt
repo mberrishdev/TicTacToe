@@ -14,12 +14,19 @@ class UserRepository(private val userDao: UserDao) {
         return userDao.getInternalUserName()
     }
 
-    suspend fun getUserIdByName(name: String): Long? {
+    suspend fun getInternalUserId(): Long {
+        return userDao.getInternalUserId()
+    }
+
+    fun getUserIdByName(name: String): Long? {
         return userDao.getUserIdByName(name)
     }
 
+    fun getUserNameById(id: Long): String? {
+        return userDao.getUserNameById(id)
+    }
 
-    suspend fun insertUser(user: User) {
+    fun insertUser(user: User) {
         userDao.insertUser(user)
     }
 
