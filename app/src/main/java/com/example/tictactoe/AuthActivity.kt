@@ -6,18 +6,11 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat.startActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.tictactoe.Database.AppDatabase
-import com.example.tictactoe.Database.MainViewModel
 import com.example.tictactoe.Database.Users.User
 import com.example.tictactoe.Database.Users.UserRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class AuthActivity : AppCompatActivity() {
     lateinit var userRepository: UserRepository

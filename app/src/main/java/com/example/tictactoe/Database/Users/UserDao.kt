@@ -8,8 +8,11 @@ interface UserDao {
     @Query("SELECT * FROM users")
     fun getAllUsers(): LiveData<List<User>>
 
-    @Query("SELECT * FROM users WHERE user_name = :userName")
-    fun getUserByName(userName: String): LiveData<User>
+    @Query("SELECT * FROM users WHERE user_name = :name")
+    fun getUserByName(name: String): List<User>
+
+    @Query("SELECT id FROM users WHERE user_name = :name")
+    suspend fun getUserIdByName(name: String): Long?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: User)
