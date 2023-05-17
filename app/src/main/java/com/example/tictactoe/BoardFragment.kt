@@ -11,11 +11,12 @@ import com.example.tictactoe.R
 class BoardFragment : Fragment() {
 
     // interface fot ButtonClickEvent
-    interface ButtonClickListener {
+    interface BoardFragmentListener {
         fun onButtonClick(row: Int, col: Int,)
+        fun onWin(playerSymbol: String)
     }
 
-    private var buttonClickListener: ButtonClickListener? = null
+    private var boardFragmentListener: BoardFragmentListener? = null
 
     // Define the singleton instance variable
     companion object {
@@ -29,20 +30,20 @@ class BoardFragment : Fragment() {
         }
     }
 
-    fun setButtonClickListener(listener: ButtonClickListener) {
-        buttonClickListener = listener
+    fun setBoardFragmentListener(listener: BoardFragmentListener) {
+        boardFragmentListener = listener
     }
 
 
-    private enum class Player(val symbol: String) {
+    enum class Player(val symbol: String) {
         X("X"),
         O("O")
     }
 
     private lateinit var buttons: Array<Array<Button>>
 
-    private var currentPlayer = Player.X
-    private var movesPlayed = 0
+    var currentPlayer = Player.X
+    var movesPlayed = 0
     private var gameEnded = false
 
     override fun onCreateView(
@@ -75,10 +76,13 @@ class BoardFragment : Fragment() {
         currentPlayer = Player.X
         movesPlayed = 0
         gameEnded = false
-        //updatePlayerText()
-        //clearButtons()
+        clearButtons()
     }
 
+    public fun resetGame()
+    {
+        initializeGame()
+    }
     fun clickButton(row: Int, col: Int)
     {
         val button = buttons.get(row).get(col);
@@ -86,7 +90,6 @@ class BoardFragment : Fragment() {
     }
 
     private fun onButtonClicked(row: Int, col: Int, button: Button) {
-        buttonClickListener?.onButtonClick(row,col)
         if (!gameEnded && button.text.isEmpty()) {
             button.text = currentPlayer.symbol
             movesPlayed++
@@ -99,9 +102,9 @@ class BoardFragment : Fragment() {
                 showDrawMessage()
             } else {
                 switchPlayer()
-                updatePlayerText()
             }
         }
+        boardFragmentListener?.onButtonClick(row,col)
     }
 
     private fun checkWin(row: Int, col: Int): Boolean {
@@ -141,11 +144,6 @@ class BoardFragment : Fragment() {
         currentPlayer = if (currentPlayer == Player.X) Player.O else Player.X
     }
 
-    private fun updatePlayerText() {
-        val playerText = requireView().findViewById<TextView>(R.id.tvPlayer)
-        playerText.text = getString(R.string.player_turn, currentPlayer.symbol)
-    }
-
     private fun clearButtons() {
         for (row in buttons) {
             for (button in row) {
@@ -155,6 +153,7 @@ class BoardFragment : Fragment() {
     }
 
     private fun showWinMessage() {
+        boardFragmentListener?.onWin(currentPlayer.symbol);
         val message = getString(R.string.player_wins, currentPlayer.symbol)
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
@@ -163,6 +162,5 @@ class BoardFragment : Fragment() {
         val message = getString(R.string.draw_message)
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
-
 
 }

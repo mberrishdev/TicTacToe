@@ -1,101 +1,82 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvPlayer"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:padding="16dp" />
-
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:columnCount="3"
-        android:rowCount="3">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_0_0"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:textSize="40sp" />
+            android:layout_margin="4dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
 
         <Button
             android:id="@+id/btn_0_1"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:textSize="40sp" />
+            android:layout_margin="4dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
 
         <Button
             android:id="@+id/btn_0_2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:textSize="40sp" />
+            android:layout_margin="4dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_1_0"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:textSize="40sp" />
+            android:layout_margin="4dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
 
         <Button
             android:id="@+id/btn_1_1"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:textSize="40sp" />
+            android:layout_margin="4dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
 
         <Button
             android:id="@+id/btn_1_2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:textSize="40sp" />
+            android:layout_margin="4dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_2_0"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:textSize="40sp" />
+            android:layout_margin="4dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
 
         <Button
             android:id="@+id/btn_2_1"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:textSize="40sp" />
+            android:layout_margin="4dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
 
         <Button
             android:id="@+id/btn_2_2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:textSize="40sp" />
+            android:layout_margin="4dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
 
-    </GridLayout>
-
-    <Button
-        android:id="@+id/btnReset"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="@string/reset_game" />
+    </LinearLayout>
 
 </LinearLayout>

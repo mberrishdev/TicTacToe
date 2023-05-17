@@ -10,11 +10,11 @@ class UserRepository(private val userDao: UserDao) {
         return userDao.getUsers()
     }
 
-    suspend fun getInternalUserName(): String {
+    fun getInternalUserName(): String {
         return userDao.getInternalUserName()
     }
 
-    suspend fun getInternalUserId(): Long {
+    fun getInternalUserId(): Long {
         return userDao.getInternalUserId()
     }
 

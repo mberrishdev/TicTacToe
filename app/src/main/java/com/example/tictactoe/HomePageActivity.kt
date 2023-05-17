@@ -15,6 +15,7 @@ class HomePageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home_page)
         showWelcomeName()
         offlineButton()
+        playComputerButton()
         settingButton()
     }
 
@@ -30,6 +31,14 @@ class HomePageActivity : AppCompatActivity() {
         offButton.setOnClickListener {
             val intent = Intent(this, OfflineGameActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    fun playComputerButton(){
+        val aiButton = findViewById<Button>(R.id.playComputerButton)
+        aiButton.setOnClickListener {
+            //val intent = Intent(this, AiGameActivity::class.java)
+            //startActivity(intent)
         }
     }
 

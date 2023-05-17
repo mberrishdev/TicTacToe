@@ -30,8 +30,8 @@ interface UserDao {
     fun getUsers(): List<User>
 
     @Query("SELECT user_name FROM users WHERE is_external = 0")
-    suspend fun getInternalUserName(): String
+    fun getInternalUserName(): String
 
     @Query("SELECT id FROM users WHERE is_external = 0")
-    suspend fun getInternalUserId(): Long
+    fun getInternalUserId(): Long
 }

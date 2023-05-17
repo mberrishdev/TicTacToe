@@ -12,6 +12,11 @@
         android:theme="@style/Theme.TicTacToe"
         tools:targetApi="31">
         <activity
+            android:name=".AiGameActivity"
+            android:exported="false"
+            android:label="@string/title_activity_ai_game"
+            android:theme="@style/Theme.TicTacToe.NoActionBar" />
+        <activity
             android:name=".OfflineGameActivity"
             android:exported="false" />
         <activity

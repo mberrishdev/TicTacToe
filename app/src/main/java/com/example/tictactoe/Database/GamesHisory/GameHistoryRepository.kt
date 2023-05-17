@@ -11,6 +11,14 @@ class GameHistoryRepository(private val gameHistoryDao: GameHistoryDao) {
         return gameHistoryDao.getGameHistoryByUser1(user1Id)
     }
 
+    fun getGameHistoryById(id: Long) : GameHistory{
+        return gameHistoryDao.getGameHistoryById(id)
+    }
+
+    fun updateGameHistory(gameHistory: GameHistory) {
+        gameHistoryDao.updateGameHistory(gameHistory)
+    }
+
     //fun getGameHistoryDaoWithUser1Id(user1Id: Long) : List<GameHistoryWithUser>{
       //  return gameHistoryDao.getGameHistoryDaoWithUser1Id(user1Id)
     //}
