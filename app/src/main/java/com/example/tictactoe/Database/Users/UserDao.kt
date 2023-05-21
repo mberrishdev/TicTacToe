@@ -21,10 +21,10 @@ interface UserDao {
     fun insertUser(user: User)
 
     @Delete
-    suspend fun deleteUser(user: User)
+    fun deleteUser(user: User)
 
     @Query("SELECT * FROM users WHERE is_external = 0")
-    suspend fun getInternalUsers(): List<User>
+    fun getInternalUsers(): List<User>
 
     @Query("SELECT * FROM users")
     fun getUsers(): List<User>
@@ -34,4 +34,7 @@ interface UserDao {
 
     @Query("SELECT id FROM users WHERE is_external = 0")
     fun getInternalUserId(): Long
+
+    @Query("DELETE FROM users")
+    fun deleteUsers()
 }

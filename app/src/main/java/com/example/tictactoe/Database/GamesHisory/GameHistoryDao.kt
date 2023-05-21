@@ -17,7 +17,7 @@ interface GameHistoryDao {
     @Update
     fun updateGameHistory(gameHistory: GameHistory)
 
-    //@Query("SELECT * FROM gamesHistory INNER JOIN users ON gamesHistory.user1Id = users.id WHERE gamesHistory.user1Id = :userId")
-    //fun getGameHistoryDaoWithUser1Id(userId: Long): List<GameHistoryWithUser>
+    @Query("DELETE FROM gamesHistory")
+    fun deleteGameHistories()
 
 }

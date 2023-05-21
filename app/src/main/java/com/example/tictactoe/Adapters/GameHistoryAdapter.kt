@@ -34,7 +34,7 @@ class GameHistoryAdapter(
 
         fun bind(gameHistory: GameHistoryWithUser) {
             textUser1Score.text = gameHistory.user1Score.toString()
-            textUser2Score.text = gameHistory.user1Score.toString()
+            textUser2Score.text = gameHistory.user2Score.toString()
             textUser2.text = gameHistory.user2Name
         }
 
@@ -43,7 +43,7 @@ class GameHistoryAdapter(
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val gameHistory = gameHistoryList[position]
-                    onItemClickListener?.onItemClick(gameHistory)
+                    onItemClickListener.onItemClick(gameHistory)
                 }
             }
         }

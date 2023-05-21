@@ -1,4 +1,6 @@
 import android.os.Bundle
+import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -104,6 +106,7 @@ class BoardFragment : Fragment() {
                 switchPlayer()
             }
         }
+
         boardFragmentListener?.onButtonClick(row,col)
     }
 
@@ -125,13 +128,15 @@ class BoardFragment : Fragment() {
         // Check diagonal
         if (row == col || row + col == 2) {
             if (buttons[0][0].text == buttons[1][1].text &&
-                buttons[0][0].text == buttons[2][2].text
+                buttons[0][0].text == buttons[2][2].text &&
+                buttons[0][2].text.isNotEmpty()
             ) {
                 return true
             }
 
             if (buttons[0][2].text == buttons[1][1].text &&
-                buttons[0][2].text == buttons[2][0].text
+                buttons[0][2].text == buttons[2][0].text &&
+                buttons[0][2].text.isNotEmpty()
             ) {
                 return true
             }

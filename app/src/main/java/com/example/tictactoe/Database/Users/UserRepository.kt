@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 class UserRepository(private val userDao: UserDao) {
     val allUsers: LiveData<List<User>> = userDao.getAllUsers()
 
-
     fun getUsers(): List<User> {
         return userDao.getUsers()
     }
@@ -30,15 +29,19 @@ class UserRepository(private val userDao: UserDao) {
         userDao.insertUser(user)
     }
 
-    suspend fun deleteUser(user: User) {
+    fun deleteUser(user: User) {
         userDao.deleteUser(user)
     }
 
-    suspend fun checkIfInternalUserExist(): Boolean {
+    fun checkIfInternalUserExist(): Boolean {
         return userDao.getInternalUsers().size == 1
     }
 
-    suspend fun existByName(name: String): Boolean{
+    fun existByName(name: String): Boolean{
         return userDao.getUserByName(name).size == 1
+    }
+
+    fun deleteUsers(){
+        userDao.deleteUsers()
     }
 }

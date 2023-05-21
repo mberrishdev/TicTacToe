@@ -24,15 +24,13 @@ class GameHistoryListFragment : Fragment(),GameHistoryAdapter.OnItemClickListene
     private lateinit var recyclerView: RecyclerView
     private lateinit var listView: ListView
     private lateinit var gameHistoryList: List<GameHistoryWithUser>
-    private var player1Name: String = "";
-    private var player2Name: String = "";
+    private lateinit var player1Name: String;
+    private lateinit var player2Name: String;
     private var player1Id: Long = 0;
     private var gameHistoryId: Long = 0;
 
-    lateinit var userRepository: UserRepository
-        private set
-    lateinit var gameHistoryRepository: GameHistoryRepository
-        private set
+    private lateinit var userRepository: UserRepository
+    private lateinit var gameHistoryRepository: GameHistoryRepository
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,30 +43,17 @@ class GameHistoryListFragment : Fragment(),GameHistoryAdapter.OnItemClickListene
         player1Name = arguments?.getString("Player1Name") ?: ""
         player1Id = arguments?.getLong("Player1Id") ?: 0
 
-        player1Name = "test"
-        player1Id = 1;
-        //listView = view.findViewById(R.id.listView)
-
         val userDao = AppDatabase.getInstance(requireContext()).userDao()
         userRepository = UserRepository(userDao)
 
         val gameHistoryDao = AppDatabase.getInstance(requireContext()).gameHistoryDao()
         gameHistoryRepository = GameHistoryRepository(gameHistoryDao)
 
-       loadUserGameHistory();
+        loadUserGameHistory();
 
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = GameHistoryAdapter(gameHistoryList,this);
-
-        /*
-       // Create a list of items
-       val itemList = listOf("Item 1", "Item 2", "Item 3")
-
-       // Create an adapter to populate the list view
-       val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, itemList)
-       listView.adapter = adapter
-        */
 
         val saveAndPlayButton = view.findViewById<Button>(R.id.saveAndPlayButton)
         saveAndPlayButton.setOnClickListener {
@@ -89,7 +74,7 @@ class GameHistoryListFragment : Fragment(),GameHistoryAdapter.OnItemClickListene
 
         gameHistoryListFromDb.forEach { gh ->
             val userName = userRepository.getUserNameById(gh.user2Id)?:"";
-            val gameHistoryWithUser = GameHistoryWithUser(gh.id, gh.user1Score, gh.user1Score,userName)
+            val gameHistoryWithUser = GameHistoryWithUser(gh.id, gh.user1Score, gh.user2Score, userName)
             gameHistoryListWithUser.add(gameHistoryWithUser);
         }
         gameHistoryList = gameHistoryListWithUser;
@@ -110,25 +95,19 @@ class GameHistoryListFragment : Fragment(),GameHistoryAdapter.OnItemClickListene
     }
 
     private fun createGameHistory() {
-        //lifecycleScope.launch() {
             val player1Id = userRepository.getUserIdByName(player1Name);
             val player2Id = userRepository.getUserIdByName(player2Name);
 
             if(player1Id !=null && player2Id !=null) {
                 val gameHistory = GameHistory(
-                    user1Id = player1Id ?: 0,
-                    user2Id = player2Id ?: 0,
+                    user1Id = player1Id,
+                    user2Id = player2Id,
                     user1Score = 0,
                     user2Score = 0,
                 )
 
-               // lifecycleScope.launch() {
-                    gameHistoryId = gameHistoryRepository.insertGameHistory(gameHistory);
-               // }
+                gameHistoryId = gameHistoryRepository.insertGameHistory(gameHistory);
             }
-
-
-       // }
     }
 
     private fun handlerItemClickOnOfflineGameActivity(gameHistoryId:Long){

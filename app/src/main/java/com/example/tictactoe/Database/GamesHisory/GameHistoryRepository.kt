@@ -19,7 +19,7 @@ class GameHistoryRepository(private val gameHistoryDao: GameHistoryDao) {
         gameHistoryDao.updateGameHistory(gameHistory)
     }
 
-    //fun getGameHistoryDaoWithUser1Id(user1Id: Long) : List<GameHistoryWithUser>{
-      //  return gameHistoryDao.getGameHistoryDaoWithUser1Id(user1Id)
-    //}
+    fun deleteGameHistories() {
+        gameHistoryDao.deleteGameHistories()
+    }
 }

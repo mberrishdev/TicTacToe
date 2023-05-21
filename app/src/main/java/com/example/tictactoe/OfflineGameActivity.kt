@@ -3,33 +3,21 @@ package com.example.tictactoe
 import BoardFragment
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.EditText
-import android.widget.Toast
-import android.app.AlertDialog
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.lifecycleScope
 import com.example.tictactoe.Database.AppDatabase
 import com.example.tictactoe.Database.GamesHisory.GameHistory
 import com.example.tictactoe.Database.GamesHisory.GameHistoryRepository
-import com.example.tictactoe.Database.Users.User
 import com.example.tictactoe.Database.Users.UserRepository
-import kotlinx.coroutines.launch
 
 class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentListener {
 
     private lateinit var gameHistoryListFragment: GameHistoryListFragment
-
-    lateinit var userRepository: UserRepository
-        private set
-
-    lateinit var gameHistoryRepository: GameHistoryRepository
-        private set
-
+    private lateinit var userRepository: UserRepository
+    private lateinit var gameHistoryRepository: GameHistoryRepository
     private var gameHistoryId: Long = 0;
     private var player1Id: Long = 0;
     private var player2Id: Long = 0;
@@ -89,10 +77,11 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
             user1Score = player1Score,
             user2Score = player2Score
         )
+
         gameHistoryRepository.updateGameHistory(gameHistory)
 
-
         updateDynamicViewValues();
+        turnTextView.text = ""
     }
 
     private fun getCurrentFragment(): Fragment? {
@@ -125,7 +114,7 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
         player2Id = gameHistory.user2Id;
         player2Name = userRepository.getUserNameById(gameHistory.user2Id)?:"";
         player1Score = gameHistory.user1Score;
-        player2Score = gameHistory.user1Score;
+        player2Score = gameHistory.user2Score;
     }
 
     private fun loadInternalUserData(){
@@ -159,6 +148,7 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
             user1Score = 0,
             user2Score = 0
         )
+
         gameHistoryRepository.updateGameHistory(gameHistory)
         player1Score = 0
         player2Score = 0
@@ -211,7 +201,6 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
         player1ScoreTextView.text = getString(R.string.player1Score, player1Score.toString())
         player2ScoreTextView.text = getString(R.string.player2ScoreWithName, player2Name, player2Score.toString())
 
-        //todo change it
         val currentPlayerName = if(gameBordFragment.currentPlayer == BoardFragment.Player.X) player1Name else player2Name
         turnTextView.text =  getString(R.string.player_turn, gameBordFragment.currentPlayer.symbol, currentPlayerName)
     }
