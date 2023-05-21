@@ -57,7 +57,7 @@ class BoardFragment : Fragment() {
         initializeButtons(view)
         initializeGame()
 
-        return view;
+        return view
     }
 
     private fun initializeButtons(view: View) {
@@ -81,13 +81,14 @@ class BoardFragment : Fragment() {
         clearButtons()
     }
 
-    public fun resetGame()
+    fun resetGame()
     {
         initializeGame()
     }
+
     fun clickButton(row: Int, col: Int)
     {
-        val button = buttons.get(row).get(col);
+        val button = buttons.get(row).get(col)
         onButtonClicked(row, col, button)
     }
 
@@ -158,7 +159,7 @@ class BoardFragment : Fragment() {
     }
 
     private fun showWinMessage() {
-        boardFragmentListener?.onWin(currentPlayer.symbol);
+        boardFragmentListener?.onWin(currentPlayer.symbol)
         val message = getString(R.string.player_wins, currentPlayer.symbol)
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }

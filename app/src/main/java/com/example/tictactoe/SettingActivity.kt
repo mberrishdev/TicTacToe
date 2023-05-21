@@ -18,7 +18,7 @@ class SettingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
 
-        setRepositories();
+        setRepositories()
 
         resetButton = findViewById(R.id.reset_button)
         resetButton.setOnClickListener {

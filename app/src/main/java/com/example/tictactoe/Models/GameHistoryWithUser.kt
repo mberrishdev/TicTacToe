@@ -5,5 +5,4 @@ data class GameHistoryWithUser(
     val user1Score: Int,
     val user2Score: Int,
     val user2Name: String
-) {
-}
+)

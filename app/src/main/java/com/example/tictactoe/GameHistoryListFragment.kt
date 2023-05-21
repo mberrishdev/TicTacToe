@@ -24,10 +24,10 @@ class GameHistoryListFragment : Fragment(),GameHistoryAdapter.OnItemClickListene
     private lateinit var recyclerView: RecyclerView
     private lateinit var listView: ListView
     private lateinit var gameHistoryList: List<GameHistoryWithUser>
-    private lateinit var player1Name: String;
-    private lateinit var player2Name: String;
-    private var player1Id: Long = 0;
-    private var gameHistoryId: Long = 0;
+    private lateinit var player1Name: String
+    private lateinit var player2Name: String
+    private var player1Id: Long = 0
+    private var gameHistoryId: Long = 0
 
     private lateinit var userRepository: UserRepository
     private lateinit var gameHistoryRepository: GameHistoryRepository
@@ -49,18 +49,18 @@ class GameHistoryListFragment : Fragment(),GameHistoryAdapter.OnItemClickListene
         val gameHistoryDao = AppDatabase.getInstance(requireContext()).gameHistoryDao()
         gameHistoryRepository = GameHistoryRepository(gameHistoryDao)
 
-        loadUserGameHistory();
+        loadUserGameHistory()
 
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = GameHistoryAdapter(gameHistoryList,this);
+        recyclerView.adapter = GameHistoryAdapter(gameHistoryList, this)
 
         val saveAndPlayButton = view.findViewById<Button>(R.id.saveAndPlayButton)
         saveAndPlayButton.setOnClickListener {
-            val nameEditText = view.findViewById<EditText>(R.id.userName);
+            val nameEditText = view.findViewById<EditText>(R.id.userName)
             player2Name = nameEditText.text.toString()
-            createUser(player2Name);
-            createGameHistory();
+            createUser(player2Name)
+            createGameHistory()
             handlerItemClickOnOfflineGameActivity(gameHistoryId)
         }
 
@@ -69,20 +69,20 @@ class GameHistoryListFragment : Fragment(),GameHistoryAdapter.OnItemClickListene
 
     private fun loadUserGameHistory()
     {
-        val gameHistoryListWithUser = mutableListOf<GameHistoryWithUser>();
-        val gameHistoryListFromDb = gameHistoryRepository.getGameHistoryByUser1(player1Id);
+        val gameHistoryListWithUser = mutableListOf<GameHistoryWithUser>()
+        val gameHistoryListFromDb = gameHistoryRepository.getGameHistoryByUser1(player1Id)
 
         gameHistoryListFromDb.forEach { gh ->
-            val userName = userRepository.getUserNameById(gh.user2Id)?:"";
+            val userName = userRepository.getUserNameById(gh.user2Id)?:""
             val gameHistoryWithUser = GameHistoryWithUser(gh.id, gh.user1Score, gh.user2Score, userName)
-            gameHistoryListWithUser.add(gameHistoryWithUser);
+            gameHistoryListWithUser.add(gameHistoryWithUser)
         }
-        gameHistoryList = gameHistoryListWithUser;
+        gameHistoryList = gameHistoryListWithUser
     }
 
     override fun onItemClick(gameHistory: GameHistoryWithUser) {
         val gameHistoryId = gameHistory.id
-        handlerItemClickOnOfflineGameActivity(gameHistoryId);
+        handlerItemClickOnOfflineGameActivity(gameHistoryId)
     }
 
     private fun createUser(name: String)
@@ -91,14 +91,14 @@ class GameHistoryListFragment : Fragment(),GameHistoryAdapter.OnItemClickListene
             userName = name,
             isExternal = true
         )
-        userRepository.insertUser(newUser);
+        userRepository.insertUser(newUser)
     }
 
     private fun createGameHistory() {
-            val player1Id = userRepository.getUserIdByName(player1Name);
-            val player2Id = userRepository.getUserIdByName(player2Name);
+            val player1Id = userRepository.getUserIdByName(player1Name)
+        val player2Id = userRepository.getUserIdByName(player2Name)
 
-            if(player1Id !=null && player2Id !=null) {
+        if(player1Id !=null && player2Id !=null) {
                 val gameHistory = GameHistory(
                     user1Id = player1Id,
                     user2Id = player2Id,
@@ -106,7 +106,7 @@ class GameHistoryListFragment : Fragment(),GameHistoryAdapter.OnItemClickListene
                     user2Score = 0,
                 )
 
-                gameHistoryId = gameHistoryRepository.insertGameHistory(gameHistory);
+                gameHistoryId = gameHistoryRepository.insertGameHistory(gameHistory)
             }
     }
 

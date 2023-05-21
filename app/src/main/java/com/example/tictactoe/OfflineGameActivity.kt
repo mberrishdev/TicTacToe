@@ -18,15 +18,15 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
     private lateinit var gameHistoryListFragment: GameHistoryListFragment
     private lateinit var userRepository: UserRepository
     private lateinit var gameHistoryRepository: GameHistoryRepository
-    private var gameHistoryId: Long = 0;
-    private var player1Id: Long = 0;
-    private var player2Id: Long = 0;
-    private var player1Name: String = "";
-    private var player2Name: String = "";
-    private var player1Symbol: String = "X";
-    private var player2Symbol: String = "O";
-    private var player1Score: Int = 0;
-    private var player2Score: Int = 0;
+    private var gameHistoryId: Long = 0
+    private var player1Id: Long = 0
+    private var player2Id: Long = 0
+    private lateinit var player1Name: String
+    private lateinit var player2Name: String
+    private var player1Symbol: String = "X"
+    private var player2Symbol: String = "O"
+    private var player1Score: Int = 0
+    private var player2Score: Int = 0
 
     private var gameBordFragment: BoardFragment =  BoardFragment.getInstance()
     private lateinit var player1ScoreTextView: TextView
@@ -43,7 +43,7 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
         loadInternalUserData()
         setViews()
 
-        openGameHistoryListFragment();
+        openGameHistoryListFragment()
     }
 
     private fun openBoardFragment()
@@ -64,7 +64,7 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
     override fun onWin(playerSymbol: String) {
         if(playerSymbol == player1Symbol)
         {
-            player1Score++;
+            player1Score++
         }else
         {
             player2Score ++
@@ -80,7 +80,7 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
 
         gameHistoryRepository.updateGameHistory(gameHistory)
 
-        updateDynamicViewValues();
+        updateDynamicViewValues()
         turnTextView.text = ""
     }
 
@@ -101,8 +101,8 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
             .commit()
         supportFragmentManager.popBackStack()
 
-        loadBoardAndPlayer2Data(gameHistoryId);
-        updateDynamicViewValues();
+        loadBoardAndPlayer2Data(gameHistoryId)
+        updateDynamicViewValues()
         updateViewsVisibility(isGameHistoryListFragmentOpen())
         openBoardFragment()
     }
@@ -110,11 +110,11 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
     private fun loadBoardAndPlayer2Data(id: Long)
     {
         val gameHistory =  gameHistoryRepository.getGameHistoryById(id)
-        gameHistoryId = gameHistory.id;
-        player2Id = gameHistory.user2Id;
-        player2Name = userRepository.getUserNameById(gameHistory.user2Id)?:"";
-        player1Score = gameHistory.user1Score;
-        player2Score = gameHistory.user2Score;
+        gameHistoryId = gameHistory.id
+        player2Id = gameHistory.user2Id
+        player2Name = userRepository.getUserNameById(gameHistory.user2Id)?:""
+        player1Score = gameHistory.user1Score
+        player2Score = gameHistory.user2Score
     }
 
     private fun loadInternalUserData(){
@@ -189,7 +189,7 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
         resetGameHistoryButton.visibility = visibility
         resetGameButton.visibility = visibility
         turnTextView.visibility = visibility
-        updateDynamicViewValues();
+        updateDynamicViewValues()
     }
 
     private fun isGameHistoryListFragmentOpen(): Boolean {

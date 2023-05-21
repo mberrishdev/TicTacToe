@@ -28,10 +28,10 @@ class AuthActivity : AppCompatActivity() {
             setContentView(R.layout.activity_auth)
             val nextButton = findViewById<Button>(R.id.nextButton)
             nextButton.setOnClickListener {
-                val nameEditText = findViewById<EditText>(R.id.nameEditText);
+                val nameEditText = findViewById<EditText>(R.id.nameEditText)
                 val name = nameEditText.text.toString()
-                createInternalUser(name);
-                redirectToHomePage(name);
+                createInternalUser(name)
+                redirectToHomePage(name)
             }
         }
     }
@@ -49,6 +49,6 @@ class AuthActivity : AppCompatActivity() {
             isExternal = false
         )
 
-        userRepository.insertUser(newUser);
+        userRepository.insertUser(newUser)
     }
 }
