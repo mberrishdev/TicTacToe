@@ -26,4 +26,9 @@
     <string name="reset_tictactoe_data">Reset TicTacToe Data</string>
     <string name="are_you_shore_to_reset">Are you sure you want to reset everything?</string>
     <string name="enter_your_name">Enter your name</string>
+    <string name="winner_popup_button">End Round and get winner</string>
+    <string name="winner_text">"Winner is %s"</string>
+    <string name="get_nearest_restaurant">Get Nearest Restaurant</string>
+    <string name="stat_new_game">Stat new Game</string>
+    <string name="are_you_sure">Are you sure?</string>
 </resources>

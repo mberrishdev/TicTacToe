@@ -40,24 +40,6 @@
 
         <!-- List of Buttons -->
         <Button
-            android:id="@+id/playComputerButton"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="Play with Computer"
-            android:textColor="#FFFFFF"
-            android:background="#FF4081"
-            android:layout_marginBottom="16dp" />
-
-        <Button
-            android:id="@+id/onlineButton"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="Online"
-            android:textColor="#FFFFFF"
-            android:background="#4CAF50"
-            android:layout_marginBottom="16dp" />
-
-        <Button
             android:id="@+id/offlineButton"
             android:layout_width="200dp"
             android:layout_height="wrap_content"

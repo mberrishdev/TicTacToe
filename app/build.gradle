@@ -61,4 +61,6 @@ dependencies {
 
     // Lifecycle support for Room
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
+
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.17'
 }

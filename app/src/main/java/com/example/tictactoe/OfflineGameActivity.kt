@@ -1,6 +1,9 @@
 package com.example.tictactoe
 
 import BoardFragment
+import android.app.AlertDialog
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -21,8 +24,8 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
     private var gameHistoryId: Long = 0
     private var player1Id: Long = 0
     private var player2Id: Long = 0
-    private lateinit var player1Name: String
-    private lateinit var player2Name: String
+    private var player1Name: String = ""
+    private var player2Name: String = ""
     private var player1Symbol: String = "X"
     private var player2Symbol: String = "O"
     private var player1Score: Int = 0
@@ -33,6 +36,7 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
     private lateinit var player2ScoreTextView: TextView
     private lateinit var resetGameHistoryButton: Button
     private lateinit var resetGameButton: Button
+    private lateinit var winnerPopupButton: Button
     private lateinit var turnTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -127,6 +131,7 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
         player2ScoreTextView = findViewById(R.id.player2ScoreTextView)
         resetGameHistoryButton = findViewById(R.id.resetGameHistoryButton)
         resetGameButton = findViewById(R.id.resetGameButton)
+        winnerPopupButton = findViewById(R.id.winnerPopupButton)
         turnTextView = findViewById(R.id.turnTextView)
 
         resetGameHistoryButton.setOnClickListener()
@@ -137,6 +142,11 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
         resetGameButton.setOnClickListener()
         {
             resetGame()
+        }
+
+        winnerPopupButton.setOnClickListener()
+        {
+            showWinnerPopup()
         }
     }
 
@@ -188,6 +198,7 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
         player2ScoreTextView.visibility = visibility
         resetGameHistoryButton.visibility = visibility
         resetGameButton.visibility = visibility
+        winnerPopupButton.visibility = visibility
         turnTextView.visibility = visibility
         updateDynamicViewValues()
     }
@@ -203,5 +214,37 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
 
         val currentPlayerName = if(gameBordFragment.currentPlayer == BoardFragment.Player.X) player1Name else player2Name
         turnTextView.text =  getString(R.string.player_turn, gameBordFragment.currentPlayer.symbol, currentPlayerName)
+    }
+
+
+    private fun showWinnerPopup()
+    {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage(R.string.are_you_sure)
+        builder.setPositiveButton(R.string.yes) { _, _ ->
+            showWinnerNameAndGiff()
+        }
+        builder.setNegativeButton(R.string.no) { dialog, _ ->
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun showWinnerNameAndGiff()
+    {
+        var winnerName = "";
+        if(player1Score > player2Score )
+            winnerName = player1Name;
+        else if( player1Score<player2Score)
+            winnerName = player2Name;
+
+        val winnerFragment = WinnerPopupFragment.newInstance(winnerName)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.winnerFragment, winnerFragment)
+            .commit()
+
+        updateViewsVisibility(false)
+        resetGameHistory()
     }
 }
