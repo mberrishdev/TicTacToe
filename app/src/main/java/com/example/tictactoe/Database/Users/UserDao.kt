@@ -18,13 +18,16 @@ interface UserDao {
     fun getUserNameById(id: Long): String?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser(user: User)
+    fun insertUser(user: User):Long
 
     @Delete
     fun deleteUser(user: User)
 
     @Query("SELECT * FROM users WHERE is_external = 0")
     fun getInternalUsers(): List<User>
+
+    @Query("SELECT * FROM users WHERE is_external = 0")
+    fun getInternalUser(): User
 
     @Query("SELECT * FROM users")
     fun getUsers(): List<User>
@@ -37,4 +40,7 @@ interface UserDao {
 
     @Query("DELETE FROM users")
     fun deleteUsers()
+
+    @Update
+    fun updateUser(user: User)
 }

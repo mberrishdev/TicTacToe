@@ -21,12 +21,16 @@ class UserRepository(private val userDao: UserDao) {
         return userDao.getUserIdByName(name)
     }
 
+    fun getInternalUser():User{
+        return  userDao.getInternalUser()
+    }
+
     fun getUserNameById(id: Long): String? {
         return userDao.getUserNameById(id)
     }
 
-    fun insertUser(user: User) {
-        userDao.insertUser(user)
+    fun insertUser(user: User) : Long{
+       return userDao.insertUser(user)
     }
 
     fun deleteUser(user: User) {
@@ -43,5 +47,9 @@ class UserRepository(private val userDao: UserDao) {
 
     fun deleteUsers(){
         userDao.deleteUsers()
+    }
+
+    fun updateUser(user: User) {
+        userDao.updateUser(user)
     }
 }

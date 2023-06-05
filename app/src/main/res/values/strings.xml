@@ -31,4 +31,6 @@
     <string name="get_nearest_restaurant">Get Nearest Restaurant</string>
     <string name="stat_new_game">Stat new Game</string>
     <string name="are_you_sure">Are you sure?</string>
+    <string name="settings">Settings</string>
+    <string name="offline">Offline</string>
 </resources>

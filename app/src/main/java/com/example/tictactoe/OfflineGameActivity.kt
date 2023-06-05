@@ -6,14 +6,17 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.tictactoe.Database.AppDatabase
 import com.example.tictactoe.Database.GamesHisory.GameHistory
 import com.example.tictactoe.Database.GamesHisory.GameHistoryRepository
+import com.example.tictactoe.Database.Users.User
 import com.example.tictactoe.Database.Users.UserRepository
 
 class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentListener {
@@ -31,7 +34,7 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
     private var player1Score: Int = 0
     private var player2Score: Int = 0
 
-    private var gameBordFragment: BoardFragment =  BoardFragment.getInstance()
+    private var gameBordFragment: BoardFragment =  BoardFragment.getInstance()  
     private lateinit var player1ScoreTextView: TextView
     private lateinit var player2ScoreTextView: TextView
     private lateinit var resetGameHistoryButton: Button
@@ -48,6 +51,8 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
         setViews()
 
         openGameHistoryListFragment()
+
+        setUserNameUpdater()
     }
 
     private fun openBoardFragment()
@@ -216,7 +221,6 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
         turnTextView.text =  getString(R.string.player_turn, gameBordFragment.currentPlayer.symbol, currentPlayerName)
     }
 
-
     private fun showWinnerPopup()
     {
         val builder = AlertDialog.Builder(this)
@@ -246,5 +250,38 @@ class OfflineGameActivity : AppCompatActivity(), BoardFragment.BoardFragmentList
 
         updateViewsVisibility(false)
         resetGameHistory()
+    }
+
+    private fun setUserNameUpdater(){
+        player2ScoreTextView.setOnClickListener {
+            showEditNameDialog()
+        }
+    }
+    private fun showEditNameDialog() {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_edit_name, null)
+        val editTextName = dialogView.findViewById<EditText>(R.id.editTextName)
+        editTextName.setText(player2Name)
+
+        val dialogBuilder = androidx.appcompat.app.AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setTitle("Edit Name")
+            .setPositiveButton("Save") { _, _ ->
+                val newName = editTextName.text.toString()
+                updateName(newName)
+            }
+            .setNegativeButton("Cancel", null)
+            .create()
+        dialogBuilder.show()
+    }
+
+    private fun updateName(newName: String) {
+        val user = User(
+            id = player2Id,
+            userName = newName,
+            isExternal = false,
+        )
+        userRepository.updateUser(user)
+        player2Name = newName;
+        updateDynamicViewValues()
     }
 }

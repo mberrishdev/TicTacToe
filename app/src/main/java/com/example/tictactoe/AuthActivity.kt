@@ -22,33 +22,44 @@ class AuthActivity : AppCompatActivity() {
         val isInternalUserExist = userRepository.checkIfInternalUserExist()
 
         if (isInternalUserExist) {
-            val name = userRepository.getInternalUserName()
-            redirectToHomePage(name)
+            val user = userRepository.getInternalUser()
+            redirectToHomePage(user)
         } else {
             setContentView(R.layout.activity_auth)
             val nextButton = findViewById<Button>(R.id.nextButton)
             nextButton.setOnClickListener {
                 val nameEditText = findViewById<EditText>(R.id.nameEditText)
                 val name = nameEditText.text.toString()
-                createInternalUser(name)
-                redirectToHomePage(name)
+                val newUser = createInternalUser(name)
+                redirectToHomePage(newUser)
             }
         }
     }
 
-    private fun redirectToHomePage(name:String){
+    private fun redirectToHomePage(user: User){
         val intent = Intent(this, HomePageActivity::class.java)
-        intent.putExtra("name", name)
+
+        intent.putExtra("id", user.id)
+        intent.putExtra("name", user.userName)
+        intent.putExtra("isExternal", user.isExternal)
         startActivity(intent)
     }
 
-    private fun createInternalUser(name:String)
+    private fun createInternalUser(name:String):User
     {
         val newUser = User(
             userName = name,
             isExternal = false
         )
 
-        userRepository.insertUser(newUser)
+        val userId = userRepository.insertUser(newUser)
+
+        val updatedUser = User(
+            id = userId,
+            userName = newUser.userName,
+            isExternal = newUser.isExternal
+        )
+
+        return updatedUser
     }
 }
